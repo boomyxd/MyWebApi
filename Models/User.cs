@@ -5,8 +5,10 @@ using System.Threading.Tasks;
 
 namespace MyWebApi.Models
 {
-    public class User
-    {
-        
-    }
+	public class User : BaseEntity
+	{
+		public string Name { get; set; }
+		public string Email { get; set; }
+		public string PasswordHash { get; set; }
+	}
 }

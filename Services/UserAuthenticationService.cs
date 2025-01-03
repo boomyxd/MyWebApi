@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace MyWebApi.Services
 {
-    public class UserService
+    public class UserAuthenticationService
     {
         
     }

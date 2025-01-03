@@ -5,8 +5,10 @@ using System.Threading.Tasks;
 
 namespace MyWebApi.Models
 {
-    public class Login
-    {
-        
-    }
+	public class Login
+	{
+		public Guid UserId { get; set; }
+		public DateTime LoginTime { get; set; }
+		public string IpAddress { get; set; }
+	}
 }

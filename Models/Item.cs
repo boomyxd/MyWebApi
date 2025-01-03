@@ -5,8 +5,9 @@ using System.Threading.Tasks;
 
 namespace MyWebApi.Models
 {
-    public class Item
-    {
-        
-    }
+	public class Item : BaseEntity
+	{
+		public string Name { get; set; }
+		public decimal Price { get; set; }
+	}
 }

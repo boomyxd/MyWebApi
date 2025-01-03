@@ -5,8 +5,8 @@ using System.Threading.Tasks;
 
 namespace MyWebApi.Services
 {
-    public class BaseService
+    public interface IUserAuthenticationService
     {
-        
+        Task<string> Authenticate(string email, string password);
     }
 }
