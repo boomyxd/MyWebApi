@@ -1,3 +1,6 @@
+using Microsoft.EntityFrameworkCore;
+using MyWebApi.Database;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
@@ -6,6 +9,14 @@ builder.Services.AddOpenApi();
 builder.Services.AddSwaggerGen();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddControllers();
+
+builder.Services.AddDbContext<AppDbContext>(options =>
+{
+	options.UseNpgsql(builder.Configuration.GetConnectionString("DefaultConnection"))
+		.UseLazyLoadingProxies()
+		.EnableSensitiveDataLogging()
+		.LogTo(Console.WriteLine);
+});
 
 var app = builder.Build();
 
