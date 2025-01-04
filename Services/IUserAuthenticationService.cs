@@ -8,7 +8,7 @@ namespace MyWebApi.Services
 {
 	public interface IUserAuthenticationService
 	{
-		Task<string> Authenticate(string email, string password);
-		Task<User> SignUp(string name, string email, string password);
+		Task<string> Login(string email, string password);
+		Task<User> SignUp(string firstName, string lastName, string email, string password);
 	}
 }
