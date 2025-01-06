@@ -14,6 +14,7 @@ namespace MyWebApi.DTOs
 
         [Required]
         [MinLength(6)]
+        [RegularExpression(@"^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).+$", ErrorMessage = "Password must contain at least one uppercase letter, one lowercase letter, and one number.")]
         public string Password { get; set; }
 
         [Required]

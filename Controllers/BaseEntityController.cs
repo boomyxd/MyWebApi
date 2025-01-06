@@ -20,14 +20,14 @@ namespace MyWebApi.Controllers
 		}
 
 		[HttpGet]
-		public async Task<IActionResult> GetAll()
+		public virtual async Task<IActionResult> GetAll()
 		{
 			var entities = await _repository.GetAllAsync();
 			return Ok(entities);
 		}
 
 		[HttpGet("{id}")]
-		public async Task<IActionResult> GetById(Guid id)
+		public virtual async Task<IActionResult> GetById(Guid id)
 		{
 			var entity = await _repository.GetByIdAsync(id);
 			if (entity == null)
@@ -38,14 +38,14 @@ namespace MyWebApi.Controllers
 		}
 
 		[HttpPost]
-		public async Task<IActionResult> Create(T entity)
+		public virtual async Task<IActionResult> Create(T entity)
 		{
 			await _repository.AddAsync(entity);
 			return CreatedAtAction(nameof(GetById), new { id = entity.Id }, entity);
 		}
 
 		[HttpPut("{id}")]
-		public async Task<IActionResult> Update(Guid id, T entity)
+		public virtual async Task<IActionResult> Update(Guid id, T entity)
 		{
 			if (id != entity.Id) return BadRequest();
 			await _repository.UpdateAsync(entity);
@@ -53,7 +53,7 @@ namespace MyWebApi.Controllers
 		}
 
 		[HttpDelete("{id}")]
-		public async Task<IActionResult> Delete(Guid id)
+		public virtual async Task<IActionResult> Delete(Guid id)
 		{
 			await _repository.DeleteAsync(id);
 			return NoContent();

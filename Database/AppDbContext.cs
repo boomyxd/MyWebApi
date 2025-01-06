@@ -57,7 +57,6 @@ namespace MyWebApi.Database
 					.WithMany()                      // An Item can appear in many Wishlists
 					.HasForeignKey(w => w.ItemId);   // Specify the foreign key in Wishlist
 			});
-			
 		}
 	}
 }
