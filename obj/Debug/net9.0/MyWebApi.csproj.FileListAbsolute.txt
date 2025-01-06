@@ -305,3 +305,4 @@ E:\Coding\Angular\MyWebApi\obj\Debug\net9.0\refint\MyWebApi.dll
 E:\Coding\Angular\MyWebApi\obj\Debug\net9.0\MyWebApi.pdb
 E:\Coding\Angular\MyWebApi\obj\Debug\net9.0\MyWebApi.genruntimeconfig.cache
 E:\Coding\Angular\MyWebApi\obj\Debug\net9.0\ref\MyWebApi.dll
+E:\Coding\Angular\MyWebApi\bin\Debug\net9.0\BCrypt.Net-Next.dll
