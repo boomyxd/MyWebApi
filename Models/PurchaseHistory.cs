@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace MyWebApi.Models
 {
-    public class PurchaseHistory
+    public class PurchaseHistory : BaseEntity
     {
         public Guid UserId { get; set; }
         public Guid ItemId { get; set; }
