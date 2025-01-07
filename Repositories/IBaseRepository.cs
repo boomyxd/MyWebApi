@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using MyWebApi.Models;
 
 namespace MyWebApi.Repositories
 {
@@ -12,5 +13,6 @@ namespace MyWebApi.Repositories
 		Task AddAsync(T entity);
 		Task UpdateAsync(T entity);
 		Task DeleteAsync(Guid id);
+		Task<IEnumerable<Item>> SearchByNameAsync(string name);
 	}
 }

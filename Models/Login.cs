@@ -8,7 +8,7 @@ namespace MyWebApi.Models
 	public class Login : BaseEntity
 	{
 		public Guid UserId { get; set; }
-		public User User { get; set; }
+		public virtual User User { get; set; }
 		public DateTime LoginTime { get; set; }
 		public string IpAddress { get; set; }
 	}

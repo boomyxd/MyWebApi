@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IdentityModel.Tokens.Jwt;
 using System.Linq;
 using System.Security.Claims;
+using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
 using Microsoft.IdentityModel.Tokens;
@@ -73,6 +74,17 @@ namespace MyWebApi.Services
 				signingCredentials: creds);
 
 			return new JwtSecurityTokenHandler().WriteToken(token);
+		}
+
+		public Task<string> GenerateRefreshToken()
+		{
+			var randomBytes = new byte[32];
+			using (var ng = RandomNumberGenerator.Create())
+			{
+				ng.GetBytes(randomBytes);
+			}
+
+			return Task.FromResult(Convert.ToBase64String(randomBytes));
 		}
 	}
 }

@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using MyWebApi.Database;
+using MyWebApi.Models;
 
 namespace MyWebApi.Repositories
 {
@@ -44,5 +45,12 @@ namespace MyWebApi.Repositories
 				await _context.SaveChangesAsync();
 			}
 		}
+		public async Task<IEnumerable<Item>> SearchByNameAsync(string name)
+		{
+			return await _context.Items
+				.Where(i => EF.Functions.Like(i.Name, $"%{name}%"))
+				.ToListAsync();
+		}
+
 	}
 }

@@ -7,7 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace MyWebApi.Controllers
 {
     [ApiController]
-    [Route("api/[controller]")]
+    [Route("api/wishlist")]
     public class WishlistController : ControllerBase
     {
         

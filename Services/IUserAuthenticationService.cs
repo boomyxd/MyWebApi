@@ -10,5 +10,7 @@ namespace MyWebApi.Services
 	{
 		Task<string> Login(string email, string password);
 		Task<User> SignUp(string firstName, string lastName, string email, string password);
+		Task<string> GenerateRefreshToken();        // Fix dette når du kommer hjem
+													//Task<User> ValidateRefreshToken(string refreshToken);
 	}
 }
