@@ -43,12 +43,21 @@ namespace MyWebApi.Controllers
 				var user = await _repository.GetUserByEmailAsync(dto.Email);
 
 				var refreshToken = await _userAuthenticationService.GenerateRefreshToken();
-				user.RefreshToken = refreshToken;
-				user.RefreshTokenExpiry = DateTime.UtcNow.AddDays(7);
+				var refreshTokenEntity = new RefreshToken
+				{
+					Token = refreshToken,
+					Expires = DateTime.UtcNow.AddDays(7),
+					UserId = user.Id,
+				};
+				user.RefreshTokens.Add(refreshTokenEntity);
 				
 				await _repository.UpdateAsync(user);
 				
-				return Ok(new { message = "User successfully logged in" });
+				return Ok(new
+				{
+					AccessToken = token,
+					RefreshToken = refreshToken
+				});
 			}
 			catch (Exception e)
 			{
@@ -84,7 +93,27 @@ namespace MyWebApi.Controllers
 		{
 			// Continue here
 			
-			var user = await 
+			if (!ModelState.IsValid) return BadRequest(ModelState);
+
+			try
+			{
+				var tokens = await _userAuthenticationService.RefreshToken(dto.RefreshToken);
+
+				if (string.IsNullOrEmpty(tokens.AccessToken) || string.IsNullOrEmpty(tokens.RefreshToken))
+				{
+					return Unauthorized(new { message = "Invalid refresh token" });
+				}
+
+				return Ok(new
+				{
+					AccessToken = tokens.AccessToken,
+					RefreshToken = tokens.RefreshToken
+				});
+			}
+			catch (Exception e)
+			{
+				return BadRequest(new { message = e.Message });
+			}
 		}
 	}
 }

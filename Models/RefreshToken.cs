@@ -12,7 +12,7 @@ namespace MyWebApi.Models
 		public DateTime Expires { get; set; }
 		public bool IsRevoked { get; set; }
 		public Guid UserId { get; set; } // Foreign key
-		public User User { get; set; } // Navigation property
+		public virtual User User { get; set; } // Navigation property
 
 	}
 }

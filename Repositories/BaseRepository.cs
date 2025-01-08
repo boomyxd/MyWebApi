@@ -51,6 +51,5 @@ namespace MyWebApi.Repositories
 				.Where(i => EF.Functions.Like(i.Name, $"%{name}%"))
 				.ToListAsync();
 		}
-
 	}
 }

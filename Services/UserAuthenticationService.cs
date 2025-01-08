@@ -76,7 +76,7 @@ namespace MyWebApi.Services
 			return new JwtSecurityTokenHandler().WriteToken(token);
 		}
 
-		public Task<string> GenerateRefreshToken()
+		public async Task<string> GenerateRefreshToken()
 		{
 			var randomBytes = new byte[32];
 			using (var ng = RandomNumberGenerator.Create())
@@ -84,7 +84,37 @@ namespace MyWebApi.Services
 				ng.GetBytes(randomBytes);
 			}
 
-			return Task.FromResult(Convert.ToBase64String(randomBytes));
+			return await Task.FromResult(Convert.ToBase64String(randomBytes));
+		}
+
+		// Here we are using a Tuple instead of creating a new class
+		public async Task<(string AccessToken, string RefreshToken)> RefreshToken(string refreshToken)
+		{
+			var user = await _userRepository.GetByRefreshTokenAsync(refreshToken);
+
+			if (user == null || !user.RefreshTokens.Any(rt => rt.Token == refreshToken && rt.Expires > DateTime.Now && !rt.IsRevoked))
+			{
+				throw new UnauthorizedAccessException("Invalid refresh token.");
+			}
+			
+			// Generate new tokens
+			var newAccessToken = GenerateJwtToken(user);
+			var newRefreshToken = await GenerateRefreshToken();
+			
+			var oldRefreshToken = user.RefreshTokens.First(rt => rt.Token == refreshToken);
+			oldRefreshToken.IsRevoked = true;
+
+			var refreshTokenEntity = new RefreshToken
+			{
+				Token = newAccessToken,
+				Expires = DateTime.UtcNow.AddDays(7),
+				UserId = user.Id,
+			};
+			user.RefreshTokens.Add(refreshTokenEntity);
+			
+			await _userRepository.UpdateAsync(user);
+			
+			return (newAccessToken, newRefreshToken);
 		}
 	}
 }

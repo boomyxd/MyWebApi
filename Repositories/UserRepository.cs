@@ -29,7 +29,7 @@ namespace MyWebApi.Repositories
 
 			return await _context.Users
 				.Include(u => u.RefreshTokens)
-				.SingleOrDefaultAsync(u => u.RefreshTokens.Any(rt => rt.Token == refreshToken));
+				.FirstOrDefaultAsync(u => u.RefreshTokens.Any(rt => rt.Token == refreshToken));
 		}
 		public async Task AddRefreshTokenAsync(RefreshToken refreshToken)
 		{
