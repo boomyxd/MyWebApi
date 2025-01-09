@@ -21,7 +21,7 @@ namespace MyWebApi.Repositories
 		{
 			return await _context.Users.FirstOrDefaultAsync(u => u.Email == email);
 		}
-
+		
 		public async Task<User> GetByRefreshTokenAsync(string refreshToken)
 		{
 			if (string.IsNullOrWhiteSpace(refreshToken))

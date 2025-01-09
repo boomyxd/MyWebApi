@@ -79,7 +79,6 @@ namespace MyWebApi.Controllers
 				{
 					dto.Role = UserRole.Customer;
 				}
-				
 				var user = await _userAuthenticationService.SignUp(dto.FirstName, dto.LastName, dto.Email, dto.Password, dto.Role);
 				
 				var responseDto = new UserForResponseDto
@@ -88,7 +87,6 @@ namespace MyWebApi.Controllers
 					LastName = user.LastName,
 					Email = user.Email
 				};
-				
 				
 				return CreatedAtAction(nameof(GetById), new { id = user.Id }, responseDto);
 			}

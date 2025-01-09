@@ -6,10 +6,9 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace MyWebApi.Controllers
 {
-    [ApiController]
-    [Route("api/[controller]")]
-    public class LoginsController : ControllerBase
-    {
-        
-    }
+	[ApiController]
+	[Route("api/[controller]")]
+	public class LoginsController : ControllerBase
+	{
+	}
 }
