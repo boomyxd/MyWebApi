@@ -2,8 +2,11 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using MyWebApi.CustomAttributes;
 using MyWebApi.DTOs;
+using MyWebApi.Enums;
 using MyWebApi.Models;
 using MyWebApi.Repositories;
 using MyWebApi.Services;
@@ -69,10 +72,15 @@ namespace MyWebApi.Controllers
 		public async Task<IActionResult> SignUp([FromBody] UserForRegistrationDto dto)
 		{
 			if (!ModelState.IsValid) return BadRequest(ModelState);
-
+			
 			try
 			{
-				var user = await _userAuthenticationService.SignUp(dto.FirstName, dto.LastName, dto.Email, dto.Password);
+				if (dto.Role == default)
+				{
+					dto.Role = UserRole.Customer;
+				}
+				
+				var user = await _userAuthenticationService.SignUp(dto.FirstName, dto.LastName, dto.Email, dto.Password, dto.Role);
 				
 				var responseDto = new UserForResponseDto
 				{
@@ -80,6 +88,7 @@ namespace MyWebApi.Controllers
 					LastName = user.LastName,
 					Email = user.Email
 				};
+				
 				
 				return CreatedAtAction(nameof(GetById), new { id = user.Id }, responseDto);
 			}
@@ -114,6 +123,12 @@ namespace MyWebApi.Controllers
 			{
 				return BadRequest(new { message = e.Message });
 			}
+		}
+		[AdminAuthorize]
+		[HttpGet("admin-data")]
+		public IActionResult GetData()
+		{
+			return Ok(new { message = "Du er admin!" });
 		}
 	}
 }

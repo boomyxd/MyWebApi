@@ -7,6 +7,7 @@ using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
 using Microsoft.IdentityModel.Tokens;
+using MyWebApi.Enums;
 using MyWebApi.Models;
 using MyWebApi.Repositories;
 
@@ -34,7 +35,7 @@ namespace MyWebApi.Services
 			return GenerateJwtToken(user);
 		}
 
-		public async Task<User> SignUp(string firstName, string lastName, string email, string password)
+		public async Task<User> SignUp(string firstName, string lastName, string email, string password, UserRole role)
 		{
 			var existingUser = await _userRepository.GetUserByEmailAsync(email);
 			if (existingUser != null)
@@ -60,7 +61,8 @@ namespace MyWebApi.Services
 			{
 			new Claim(ClaimTypes.NameIdentifier, user.Id.ToString()),
 			new Claim(ClaimTypes.Email, user.Email),
-			new Claim(ClaimTypes.Name, $"{user.FirstName} {user.LastName}")
+			new Claim(ClaimTypes.Name, $"{user.FirstName} {user.LastName}"),
+			new Claim(ClaimTypes.Role, user.Role.ToString())
 		};
 
 			var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_configuration["Jwt:Key"]));

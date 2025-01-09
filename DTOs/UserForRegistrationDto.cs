@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Threading.Tasks;
+using MyWebApi.Enums;
 
 namespace MyWebApi.DTOs
 {
@@ -22,5 +23,8 @@ namespace MyWebApi.DTOs
 
         [Required]
         public string LastName { get; set; }
+        
+        [Required]
+        public UserRole Role { get; set; } = UserRole.Customer;
     }
 }
