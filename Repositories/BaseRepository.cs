@@ -13,6 +13,8 @@ namespace MyWebApi.Repositories
 
 		private readonly AppDbContext _context;
 		private readonly DbSet<T> _dbSet;
+		
+		private readonly IHttpContextAccessor _httpContextAccessor;
 
 		public BaseRepository(AppDbContext context)
 		{
@@ -51,5 +53,6 @@ namespace MyWebApi.Repositories
 				.Where(i => EF.Functions.Like(i.Name, $"%{name}%"))
 				.ToListAsync();
 		}
+	
 	}
 }

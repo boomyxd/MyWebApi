@@ -19,7 +19,8 @@ builder.Services.AddScoped<IUserRepository, UserRepository>();
 builder.Services.AddScoped<IUserAuthenticationService, UserAuthenticationService>();
 
 builder.Services.AddScoped<IBaseRepository<Item>, BaseRepository<Item>>();
-
+builder.Services.AddHttpContextAccessor();
+builder.Services.AddScoped(typeof(IBaseRepository<>), typeof(BaseRepository<>));
 
 
 builder.Services.AddDbContext<AppDbContext>(options =>
